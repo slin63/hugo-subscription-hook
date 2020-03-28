@@ -31,11 +31,12 @@ class Email(object):
 
     def __hash__(self):
         m = md5()
-        m.update(self.__repr__().encode('utf-8'))
+        m.update(self.__repr__().encode("utf-8"))
         return int.from_bytes(m.digest(), byteorder)
 
     def __repr__(self):
         return f"{self.subject} from: {self.from_} date: {self.date}"
+
 
 # Read our email hashes into a set.
 def get_email_hashes():
@@ -43,10 +44,12 @@ def get_email_hashes():
         hashes = {int(line.strip()) for line in file}
     return hashes
 
+
 # Write our email hashes to a file.
 def write_email_hashes(hashes):
-     with open(email_list, "w") as file:
+    with open(email_list, "w") as file:
         file.writelines(["%s\n" % item for item in hashes])
+
 
 # Log into the email server and get the `limit` most recent e-mails
 def get_emails(limit=40):
@@ -76,10 +79,11 @@ def get_emails(limit=40):
 
     return emails
 
+
 # Turn 'name <name@google.com>' into 'name@google.com'
 def extract_email(text):
-    start = text.find('<') + 1
-    end = text.find('>')
+    start = text.find("<") + 1
+    end = text.find(">")
 
     return text[start:end]
 
@@ -106,4 +110,3 @@ def get_unsubscribes():
     write_email_hashes(hashes_total)
 
     return [e.from_ for e in emails_new]
-

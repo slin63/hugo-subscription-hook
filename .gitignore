@@ -4,4 +4,4 @@ secret.json
 __pycache__
 token.pickle
 emails.txt
-post_count.txt
+posts.txt

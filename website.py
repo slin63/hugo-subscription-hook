@@ -4,22 +4,32 @@ import pathlib
 
 
 script_path = str(pathlib.Path(__file__).parent.absolute())
-post_count = script_path + "/post_count.txt"
+posts = script_path + "/posts.txt"
 # WEBSITE = "https://www.chronicpizza.net/"
 WEBSITE = "http://localhost:1313/"
+
 # The title of every post contains one of this character.
 # We can easily use it to count how many posts there are.
 SPECIAL_CHAR = "•"
 
-def check_post_count():
-    r = requests.get(WEBSITE)
-    return r.text.count(SPECIAL_CHAR)
+# Returns post names, from newest to oldest
+def check_posts():
+    r = requests.get(WEBSITE).text
+    names = []
+    post_idx = [i for i, ltr in enumerate(r) if ltr == SPECIAL_CHAR]
+    for idx in post_idx:
+        start = idx - 2
+        end = r.find("</a>", start)
+        names.append(r[start:end])
 
-def get_post_count():
-    with open(post_count) as file:
-        s = file.read()
-    return int(s)
+    return names
 
-def write_post_count(c):
-     with open(post_count, "w") as file:
-        file.write(str(c))
+
+def get_posts():
+    with open(posts) as file:
+        return file.read()
+
+
+def write_posts(s):
+    with open(posts, "w") as file:
+        file.write(s)

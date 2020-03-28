@@ -29,3 +29,6 @@ Everything is being run on my tiny Raspberry Pi.
 ### Unsubscribing
 1. A user replies to a standard subscription email
 2. A script sees this reply and removes the user from the list of subscribers.
+
+https://docs.google.com/spreadsheets/d/1RDugEZOMz_hfKXvz-BHu-7z2TkCsGHmT9gBduccmdgE/edit#gid=2045959944
+https://docs.google.com/forms/d/13d6y2Pt9dr0pVVsEi6JJR4Waii3tONyzMZOZGUPq8to/edit?usp=forms_home&ths=true
