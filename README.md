@@ -8,6 +8,21 @@ Everything is being run on my tiny Raspberry Pi.
 `source ./.env && python3.7 bot.py`
 
 
+## Example run
+
+```
+[subhook]: Getting subscribers...
+[subhook]: Getting subscribers... Done! 1 subscribers.
+[subhook]: Getting unsubscribes...
+0 new emails!
+[subhook]: Getting unsubscribes... Done!
+[subhook]: Checking website for changes...
+[subhook]: Checking website for changes... Done! 3 new posts.
+[subhook]: E-mailing subscribers...
+[send_emails] Emailed to mistercoolguy@ghouls.com
+[subhook]: E-mailing subscribers... Done!
+```
+
 ## Overview
 
 ### Subscribing
@@ -29,6 +44,3 @@ Everything is being run on my tiny Raspberry Pi.
 ### Unsubscribing
 1. A user replies to a standard subscription email
 2. A script sees this reply and removes the user from the list of subscribers.
-
-https://docs.google.com/spreadsheets/d/1RDugEZOMz_hfKXvz-BHu-7z2TkCsGHmT9gBduccmdgE/edit#gid=2045959944
-https://docs.google.com/forms/d/13d6y2Pt9dr0pVVsEi6JJR4Waii3tONyzMZOZGUPq8to/edit?usp=forms_home&ths=true

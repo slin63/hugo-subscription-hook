@@ -115,15 +115,20 @@ def get_unsubscribes():
 
 def send_emails(targets, header, body):
     for target in targets:
-        msg = EmailMessage()
-        msg["Subject"] = header
-        msg["From"] = os.getenv("SH_EMAIL")
-        msg["To"] = target
-        msg.set_content(body)
+        try:
+            msg = EmailMessage()
+            msg["Subject"] = header
+            msg["From"] = os.getenv("SH_EMAIL")
+            msg["To"] = target
+            msg.set_content(body)
 
-        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-        server.ehlo()
-        authorization = server.login(os.getenv("SH_EMAIL"), os.getenv("SH_PASSWORD")
-        send_message = server.send_message(msg)
-        server.close()
-        print("Emailed to", target)
+            server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+            server.ehlo()
+            authorization = server.login(
+                os.getenv("SH_EMAIL"), os.getenv("SH_PASSWORD")
+            )
+            send_message = server.send_message(msg)
+            server.close()
+            print("[send_emails] Emailed to", target)
+        except Exception as e:
+            print("[send_emails ERR]: ", e)

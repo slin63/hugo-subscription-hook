@@ -11,9 +11,13 @@ def get_subscribers():
     client = gspread.authorize(creds)
 
     sheet = client.open("chronic pizza subscribe (Responses)").sheet1
-    subscribers = sheet.col_values(2)[1:]  # [1:] so that we can omit the header
+    subscribers = list(
+        set(sheet.col_values(2)[1:])
+    )  # [1:] so that we can omit the header, list(set()) to remove duplicates
+    if "" in subscribers:
+        subscribers.remove("")
 
-    return list(set(subscribers)), sheet
+    return subscribers, sheet
 
 
 # Takes in a list of emails and removes them from the spreadsheet
