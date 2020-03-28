@@ -14,15 +14,12 @@ Everything is being run on my tiny Raspberry Pi
 </div>
 ```
 
-2. x An automated script periodically checks Google Sheet and checks for new subscribers. Thanks to [towardsdatascience](https://towardsdatascience.com/accessing-google-spreadsheet-data-using-python-90a5bc214fd2).
-
-3. Subscribers are added to a text file.
+2. An automated script periodically checks Google Sheets to get a list of subscribers. Thanks to [towardsdatascience](https://towardsdatascience.com/accessing-google-spreadsheet-data-using-python-90a5bc214fd2).
 
 4. Another automated script curls my website and looks for changes.
 
 5. If it detects any changes, it notifies the list of subscribers.
 
 ## Unsubscribing
-1. A user replies "unsubscribe" to a standard subscription email
-
-2. An automated script periodically checks its email inbox and removes emails from the subscribe sheet as needed
+1. A user replies to a standard subscription email
+2. A script sees this reply and removes the user from the list of subscribers.
