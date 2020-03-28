@@ -5,8 +5,7 @@ import pathlib
 
 script_path = str(pathlib.Path(__file__).parent.absolute())
 posts = script_path + "/posts.txt"
-# WEBSITE = "https://www.chronicpizza.net/"
-WEBSITE = "http://localhost:1313/"
+WEBSITE = "https://www.chronicpizza.net/"
 
 # The title of every post contains one of this character.
 # We can easily use it to count how many posts there are.
