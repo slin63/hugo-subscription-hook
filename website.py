@@ -23,8 +23,3 @@ def get_post_count():
 def write_post_count(c):
      with open(post_count, "w") as file:
         file.write(str(c))
-
-x = check_post_count()
-z = get_post_count()
-print(z)
-write_post_count(x)
