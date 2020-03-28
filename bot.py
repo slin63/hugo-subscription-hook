@@ -1,5 +1,13 @@
 import sheets
+import pathlib
+import emails
+
+# Checks Google Sheets to get a list of subscribers and cull users who have unsubscribed.
+PATH = str(pathlib.Path(__file__).parent.absolute())
+SUBSCRIBERS = PATH + "/subs.txt"
 
 subscribers, sheet = sheets.get_subscribers()
-print(subscribers)
-sheets.remove_subscribers(["shean.lin2018@gmail.com", "test@gm.com"], sheet)
+unsubscribes = emails.get_unsubscribes()
+sheets.remove_subscribers(unsubscribes, sheet)
+print(f"Unsubscribers: {unsubscribes}")
+

@@ -1,7 +1,5 @@
-# Runs at a fixed interval and pulls in gmails & curls website
-# - Email subjects contain actions + information
-#   - Modify data store from email subjects
-# - Notifies subscribers on website changes
+# Unsubscribing
+# 1. A user replies to a standard subscription email9
 
 # Gets account information from .env
 import imaplib
@@ -21,16 +19,9 @@ from email.policy import default
 script_path = str(pathlib.Path(__file__).parent.absolute())
 debug = True
 
-# A list of subscribers.
-subscriber_list = script_path + "/subs.txt"
-
 # A list of email hashes.
 email_list = script_path + "/emails.txt"
 
-# String constants to be interpreted as actions
-SUBSCRIBE = "[SUBSCRIBE]"
-UNSUBSCRIBE = "[UNSUBSCRIBE]"
-DELIMITER = ","
 
 class Email(object):
     def __init__(self, from_, subject, date):
@@ -79,21 +70,23 @@ def get_emails(limit=40):
         raw_email = data[0][1]
         raw_email_string = raw_email.decode("utf-8")
         headers = Parser(policy=default).parsestr(raw_email_string)
-        e = Email(headers["From"], headers["Subject"], headers["Date"])
+
+        e = Email(extract_email(headers["From"]), headers["Subject"], headers["Date"])
         emails[hash(e)] = e
 
     return emails
 
-def process_emails(emails):
-    for email in emails:
-        if SUBSCRIBE in email.subject:
-            target = email.subject.split(DELIMITER)[1]
-            print(f"Subscribing {target}")
-        elif UNSUBSCRIBE in email.subject:
-            target = email.subject.split(DELIMITER)[1]
-            print(f"Unsubscribing {target}")
+# Turn 'name <name@google.com>' into 'name@google.com'
+def extract_email(text):
+    start = text.find('<') + 1
+    end = text.find('>')
 
-if __name__ == "__main__":
+    return text[start:end]
+
+
+# Look through our email inbox for new e-mails.
+# Return a list of strings with names of the senders for each of the new e-mails.
+def get_unsubscribes():
     emails = get_emails()
 
     # Compare our existing hashes with the incoming new hashes to determine what e-mails are new
@@ -105,9 +98,12 @@ if __name__ == "__main__":
     hashes_total = hashes_incoming.union(hashes_seen)
 
     emails_new = []
-    print(f"{len(hashes_new)} new e-mails")
+    print(f"{len(hashes_new)} new emails!")
     for h in hashes_new:
         emails_new.append(emails[h])
 
+    # Update our big pile of seen emails with the new e-mails
     write_email_hashes(hashes_total)
-    process_emails(emails_new)
+
+    return [e.from_ for e in emails_new]
+
