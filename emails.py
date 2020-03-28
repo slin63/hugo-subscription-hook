@@ -3,6 +3,7 @@
 
 # Gets account information from .env
 import imaplib
+import smtplib
 import base64
 import os
 import pathlib
@@ -110,3 +111,19 @@ def get_unsubscribes():
     write_email_hashes(hashes_total)
 
     return [e.from_ for e in emails_new]
+
+
+def send_emails(targets, header, body):
+    for target in targets:
+        msg = EmailMessage()
+        msg["Subject"] = header
+        msg["From"] = os.getenv("SH_EMAIL")
+        msg["To"] = target
+        msg.set_content(body)
+
+        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+        server.ehlo()
+        authorization = server.login(os.getenv("SH_EMAIL"), os.getenv("SH_PASSWORD")
+        send_message = server.send_message(msg)
+        server.close()
+        print("Emailed to", target)
