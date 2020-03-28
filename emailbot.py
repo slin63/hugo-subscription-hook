@@ -27,6 +27,11 @@ subscriber_list = script_path + "/subs.txt"
 # A list of email hashes.
 email_list = script_path + "/emails.txt"
 
+# String constants to be interpreted as actions
+SUBSCRIBE = "[SUBSCRIBE]"
+UNSUBSCRIBE = "[UNSUBSCRIBE]"
+DELIMITER = ","
+
 class Email(object):
     def __init__(self, from_, subject, date):
         self.from_ = from_
@@ -79,6 +84,14 @@ def get_emails(limit=40):
 
     return emails
 
+def process_emails(emails):
+    for email in emails:
+        if SUBSCRIBE in email.subject:
+            target = email.subject.split(DELIMITER)[1]
+            print(f"Subscribing {target}")
+        elif UNSUBSCRIBE in email.subject:
+            target = email.subject.split(DELIMITER)[1]
+            print(f"Unsubscribing {target}")
 
 if __name__ == "__main__":
     emails = get_emails()
@@ -91,8 +104,10 @@ if __name__ == "__main__":
     hashes_new = hashes_incoming.difference(hashes_seen)
     hashes_total = hashes_incoming.union(hashes_seen)
 
+    emails_new = []
     print(f"{len(hashes_new)} new e-mails")
     for h in hashes_new:
-        print(emails[h])
+        emails_new.append(emails[h])
 
     write_email_hashes(hashes_total)
+    process_emails(emails_new)
