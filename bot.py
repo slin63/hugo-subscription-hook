@@ -3,6 +3,10 @@ import pathlib
 import emails
 import website
 
+# Create any state that we might be missing
+pathlib.Path(emails.email_list).touch()
+pathlib.Path(website.post_count).touch()
+
 # Checks Google Sheets to get a list of subscribers
 PATH = str(pathlib.Path(__file__).parent.absolute())
 SUBSCRIBERS = PATH + "/subs.txt"
