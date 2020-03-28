@@ -1,13 +1,16 @@
+import pathlib
 import gspread
+
 from oauth2client.service_account import ServiceAccountCredentials
 
+script_path = str(pathlib.Path(__file__).parent.absolute())
 
 def get_subscribers():
     scope = [
         "https://spreadsheets.google.com/feeds",
         "https://www.googleapis.com/auth/drive",
     ]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("secret.json", scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name(script_path + "/secret.json", scope)
     client = gspread.authorize(creds)
 
     sheet = client.open("chronic pizza subscribe (Responses)").sheet1
