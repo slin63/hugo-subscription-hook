@@ -1,8 +1,9 @@
+![in the wild](./images/1.png)
 # hugo-subscription-hook
 
-Lightweight hacky subscription form and subscription notifications for my Hugo website, www.chronicpizza.net
+Lightweight hacky subscription form and subscription notifications for my Hugo website, www.chronicpizza.net. Everything is being run on my Raspberry Pi.
 
-Everything is being run on my tiny Raspberry Pi.
+
 
 ## Setup
 `source ./.env && python3.7 bot.py`
