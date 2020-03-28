@@ -1,2 +1,5 @@
 .DS_Store
 .env
+secret.json
+__pycache__
+token.pickle
